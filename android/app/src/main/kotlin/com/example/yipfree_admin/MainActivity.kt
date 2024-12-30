@@ -1,0 +1,5 @@
+package com.example.yipfree_admin
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
