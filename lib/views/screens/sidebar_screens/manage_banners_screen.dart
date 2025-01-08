@@ -44,7 +44,7 @@ String downloadURL = await snapshot.ref.getDownloadURL();
   return downloadURL;
 }
 
-uploadToFirebaseStore ()async{
+uploadToFirebaseStore () async {
   EasyLoading.show(status: "Uploading...",);
   if (_banner != null){
     String imageUrl = await _saveBannerToFirebase(_banner);

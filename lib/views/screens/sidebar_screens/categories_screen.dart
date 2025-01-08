@@ -35,6 +35,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       setState(() {
         _category = result.files.first.bytes;
         fileName = result.files.first.name;
+        categoryName = result.files.first.name;
       });
     }
   }
@@ -51,21 +52,24 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   uploadCategory() async {
-    EasyLoading.show(status: 'Uploading...');
-    if (_formKey.currentState!.validate()) {
+  EasyLoading.show(status: 'Uploading...');
+  if (_formKey.currentState!.validate()) {
+    try {
       String imageUrl = await _uploadCategoryThumbnailToStorage(_category);
-
       await _firestore.collection('categories').doc(fileName).set({
         'image': imageUrl,
         'categoryName': categoryName,
-      },).whenComplete(() {
-        EasyLoading.dismiss();
-        setState(() {
-          _category = null;
-        });
       });
+      EasyLoading.dismiss();
+      setState(() {
+        _category = null;
+      });
+    } catch (error) {
+      EasyLoading.dismiss();
+      print('Error uploading category: $error');
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
