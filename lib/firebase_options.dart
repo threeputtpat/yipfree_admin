@@ -53,12 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBZWR2VzPZYgmhIWL_DtQgplsLvP56BbYk',
-    appId: '1:13148124239:web:d0b9daffea60cdb003263a',
-    messagingSenderId: '13148124239',
-    projectId: 'yipfree-marketplace',
-    authDomain: 'yipfree-marketplace.firebaseapp.com',
-    storageBucket: 'yipfree-marketplace.firebasestorage.app',
-    measurementId: 'G-93VVWN51FN',
+    apiKey: "AIzaSyBZWR2VzPZYgmhIWL_DtQgplsLvP56BbYk",
+    authDomain: "yipfree-marketplace.firebaseapp.com",
+    projectId: "yipfree-marketplace",
+    storageBucket: "yipfree-marketplace.firebasestorage.app",
+    messagingSenderId: "13148124239",
+    appId: "1:13148124239:web:d0b9daffea60cdb003263a",
+    measurementId: "G-93VVWN51FN"
   );
 }

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "13148124239",
+    "project_id": "yipfree-marketplace",
+    "storage_bucket": "yipfree-marketplace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13148124239:android:c5eec44494c0f36503263a",
+        "android_client_info": {
+          "package_name": "com.bowman.yipfree_marketplace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsZrurJBYpvNoxefyekHpfTnaLN5PqKwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13148124239:android:d3c6ab3c05ca058803263a",
+        "android_client_info": {
+          "package_name": "com.example.yipfree_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsZrurJBYpvNoxefyekHpfTnaLN5PqKwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

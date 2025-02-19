@@ -16,46 +16,60 @@ class ManageBannersScreen extends StatefulWidget {
 class _ManageBannersScreenState extends State<ManageBannersScreen> {
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  dynamic _banner;
+  dynamic _image;
   String? fileName;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  pickImage ()async{
+  pickImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.image,
     );
 
-if (result != null) {
-  setState(() {
-    _banner = result.files.first.bytes;
-    fileName = result.files.first.name;
-  });
-}}
+    if (result != null) {
+      setState(() {
+        _image = result.files.first.bytes;
+        fileName = result.files.first.name;
+      });
+    }
+  }
 
-_saveBannerToFirebase (dynamic image)async{
-Reference ref = _storage.ref().child('Banners').child(fileName!);
+_uploadBannerToStorage (dynamic image)async{
+  Reference ref = _storage.ref().child('Banners').child(fileName!);
 
-UploadTask uploadTask = ref.putData(image);
+  // Determine content type based on file extension
+  String extension = fileName!.split('.').last.toLowerCase();
+  String contentType = 'image/$extension';
+  if (extension == 'jpg') {
+    contentType = 'image/jpeg';
+  }
 
-TaskSnapshot snapshot = await uploadTask;
-String downloadURL = await snapshot.ref.getDownloadURL();
+  // Set metadata with content type - a different file type was being uploaded to the storage bucket, this ensures I get the image URL
+  SettableMetadata metadata = SettableMetadata(
+    contentType: contentType,
+  );
+
+  UploadTask uploadTask = ref.putData(image, metadata);
+
+  TaskSnapshot snapshot = await uploadTask;
+  String downloadURL = await snapshot.ref.getDownloadURL();
+  print('Banner download URL received: $downloadURL');
   return downloadURL;
 }
 
 uploadToFirebaseStore () async {
   EasyLoading.show(status: "Uploading...",);
-  if (_banner != null){
-    String imageUrl = await _saveBannerToFirebase(_banner);
+  if (_image != null){
+    String imageUrl = await _uploadBannerToStorage(_image);
 
-   await _firestore.collection('Banners').doc(fileName).set({
+   await _firestore.collection('banners').doc(fileName).set({
     'image' : imageUrl,
     },).whenComplete((){
     EasyLoading.dismiss();
 
     setState(() {
-      _banner = null;
+      _image = null;
     });
     },
    );
@@ -87,7 +101,7 @@ uploadToFirebaseStore () async {
                     width: 230,
                     decoration: BoxDecoration(color: Colors.blue[100], 
                     borderRadius: BorderRadius.circular(10),),
-                    child: _banner!=null ? Image.memory(_banner, fit: BoxFit.cover,) : 
+                    child: _image!=null ? Image.memory(_image, fit: BoxFit.cover,) : 
                   const Center(child: Text('Image Preview'),),
                 ),
               ),
